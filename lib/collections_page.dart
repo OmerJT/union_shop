@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:union_shop/union_footer.dart';
+import 'package:union_shop/shop_data.dart';
 
 class CollectionsPage extends StatelessWidget {
   const CollectionsPage({super.key});
@@ -24,9 +25,20 @@ class CollectionsPage extends StatelessWidget {
 
   void placeholderCallbackForButtons() {}
 
+  int _countForCategory(String category) {
+    return ShopData.products
+        .where((p) => p.category == category)
+        .length;
+  }
+
   @override
   Widget build(BuildContext context) {
     final isWide = MediaQuery.of(context).size.width > 600;
+
+    final clothingCount = _countForCategory('Clothing');
+    final giftsCount = _countForCategory('Gifts');
+    final stationeryCount = _countForCategory('Stationery');
+    final saleCount = ShopData.saleProducts.length;
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -186,33 +198,43 @@ class CollectionsPage extends StatelessWidget {
                         title: 'University Clothing',
                         description:
                             'Hoodies, T-shirts and other branded clothing.',
+                        productCount: clothingCount,
                         imageUrl:
                             'https://shop.upsu.net/cdn/shop/files/upsu-hoodies_1024x1024@2x.jpg?v=1614740063',
-                        onTap: () =>
-                            showComingSoon(context, 'University Clothing'),
+                        onTap: () => showComingSoon(
+                          context,
+                          'University Clothing',
+                        ),
                       ),
                       CollectionCard(
                         title: 'Gifts & Stationery',
                         description:
                             'Notebooks, pens, mugs and small gift items.',
+                        productCount: giftsCount + stationeryCount,
                         imageUrl:
                             'https://shop.upsu.net/cdn/shop/files/portsmouth-mugs_1024x1024@2x.jpg?v=1614740063',
-                        onTap: () =>
-                            showComingSoon(context, 'Gifts & Stationery'),
+                        onTap: () => showComingSoon(
+                          context,
+                          'Gifts & Stationery',
+                        ),
                       ),
                       CollectionCard(
                         title: 'Portsmouth Range',
                         description:
                             'Local designs celebrating the city of Portsmouth.',
+                        productCount: giftsCount,
                         imageUrl:
                             'https://shop.upsu.net/cdn/shop/files/PortsmouthCityPostcard2_1024x1024@2x.jpg?v=1752232561',
-                        onTap: () =>
-                            showComingSoon(context, 'Portsmouth Range'),
+                        onTap: () => showComingSoon(
+                          context,
+                          'Portsmouth Range',
+                        ),
                       ),
                       CollectionCard(
                         title: 'Sale',
                         description:
                             'End-of-line and discounted Union Shop favourites.',
+                        productCount: saleCount,
                         imageUrl:
                             'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
                         isSale: true,
@@ -237,6 +259,7 @@ class CollectionCard extends StatelessWidget {
   final String description;
   final String imageUrl;
   final bool isSale;
+  final int productCount;
   final VoidCallback? onTap;
 
   const CollectionCard({
@@ -244,6 +267,7 @@ class CollectionCard extends StatelessWidget {
     required this.title,
     required this.description,
     required this.imageUrl,
+    required this.productCount,
     this.isSale = false,
     this.onTap,
   });
@@ -322,6 +346,14 @@ class CollectionCard extends StatelessWidget {
                     ),
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 6),
+                  Text(
+                    '$productCount products',
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: Colors.grey,
+                    ),
                   ),
                 ],
               ),
