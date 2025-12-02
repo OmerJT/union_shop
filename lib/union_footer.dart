@@ -8,7 +8,7 @@ class UnionFooter extends StatelessWidget {
     final isWide = MediaQuery.of(context).size.width > 800;
     const bgColor = Color(0xFFF6F5F4);
 
-    final content = isWide
+    Widget columns = isWide
         ? Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: const [
@@ -37,7 +37,7 @@ class UnionFooter extends StatelessWidget {
       child: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 1000),
-          child: content,
+          child: columns,
         ),
       ),
     );
@@ -46,6 +46,7 @@ class UnionFooter extends StatelessWidget {
 
 class _FooterTitle extends StatelessWidget {
   final String text;
+
   const _FooterTitle(this.text);
 
   @override
@@ -81,10 +82,10 @@ class _OpeningHoursColumn extends StatelessWidget {
           '\n'
           '--------------------------\n'
           '(Term Time)\n'
-          'Monday – Friday 10am – 4pm\n'
+          'Mon – Fri 10am – 4pm\n'
           '\n'
-          '(Outside of Term Time / Consolidation Weeks)\n'
-          'Monday – Friday 10am – 3pm\n'
+          '(Outside Term / Consolidation)\n'
+          'Mon – Fri 10am – 3pm\n'
           '\n'
           'Purchase online 24/7',
           style: TextStyle(

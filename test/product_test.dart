@@ -4,22 +4,18 @@ import 'package:union_shop/product_page.dart';
 
 void main() {
   group('Product Page Tests', () {
-    Widget createTestWidget() {
-      return const MaterialApp(home: ProductPage());
-    }
+    Widget createTestWidget() => const MaterialApp(home: ProductPage());
 
     testWidgets('should display product page with basic elements',
         (tester) async {
       await tester.pumpWidget(createTestWidget());
       await tester.pumpAndSettle();
 
-      // Header banner
       expect(
         find.text('FREE CLICK & COLLECT FROM THE UNION SHOP'),
         findsOneWidget,
       );
 
-      // Product information
       expect(find.text('Portsmouth City Fridge Magnet'), findsOneWidget);
       expect(find.text('£15.00'), findsOneWidget);
       expect(find.text('Description'), findsOneWidget);
@@ -30,12 +26,10 @@ void main() {
       await tester.pumpWidget(createTestWidget());
       await tester.pumpAndSettle();
 
-      // Labels for options
       expect(find.text('Color'), findsOneWidget);
       expect(find.text('Size'), findsOneWidget);
       expect(find.text('Quantity'), findsOneWidget);
 
-      // Action buttons
       expect(find.text('ADD TO BAG'), findsOneWidget);
       expect(find.text('BUY NOW'), findsOneWidget);
     });

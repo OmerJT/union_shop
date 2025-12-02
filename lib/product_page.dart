@@ -22,24 +22,23 @@ class _ProductPageState extends State<ProductPage> {
   }
 
   void placeholderCallbackForButtons() {
-    // This is the event handler for buttons that don't work yet
+    // No real add-to-cart logic needed
   }
 
   @override
   Widget build(BuildContext context) {
-    final accent = const Color(0xFF4d2963);
+    const accent = Color(0xFF4d2963);
 
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // Header (same as other pages)
+            // Header (same pattern as Home)
             Container(
               height: 100,
               color: Colors.white,
               child: Column(
                 children: [
-                  // Top banner
                   Container(
                     width: double.infinity,
                     padding: const EdgeInsets.symmetric(vertical: 8),
@@ -50,13 +49,11 @@ class _ProductPageState extends State<ProductPage> {
                       style: TextStyle(color: Colors.white, fontSize: 16),
                     ),
                   ),
-                  // Main header
                   Expanded(
                     child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: Row(
                         children: [
-                          // Logo on the left
                           GestureDetector(
                             onTap: () => navigateToHome(context),
                             child: Image.network(
@@ -78,8 +75,6 @@ class _ProductPageState extends State<ProductPage> {
                               },
                             ),
                           ),
-
-                          // About Us centred
                           Expanded(
                             child: Center(
                               child: TextButton(
@@ -94,8 +89,6 @@ class _ProductPageState extends State<ProductPage> {
                               ),
                             ),
                           ),
-
-                          // Icons on the right
                           Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
@@ -123,7 +116,9 @@ class _ProductPageState extends State<ProductPage> {
                                   minWidth: 32,
                                   minHeight: 32,
                                 ),
-                                onPressed: placeholderCallbackForButtons,
+                                onPressed: () {
+                                  Navigator.pushNamed(context, '/auth');
+                                },
                               ),
                               IconButton(
                                 icon: const Icon(
@@ -161,7 +156,7 @@ class _ProductPageState extends State<ProductPage> {
               ),
             ),
 
-            // Product details
+            // Product body
             Container(
               color: Colors.white,
               padding: const EdgeInsets.all(24),
@@ -212,7 +207,6 @@ class _ProductPageState extends State<ProductPage> {
 
                       const SizedBox(height: 24),
 
-                      // Name
                       const Text(
                         'Portsmouth City Fridge Magnet',
                         style: TextStyle(
@@ -221,11 +215,8 @@ class _ProductPageState extends State<ProductPage> {
                           color: Colors.black,
                         ),
                       ),
-
                       const SizedBox(height: 12),
-
-                      // Price
-                      Text(
+                      const Text(
                         '£15.00',
                         style: TextStyle(
                           fontSize: 24,
@@ -233,14 +224,12 @@ class _ProductPageState extends State<ProductPage> {
                           color: accent,
                         ),
                       ),
-
                       const SizedBox(height: 24),
 
                       // Colour / Size / Quantity
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // Colour
                           const Text(
                             'Color',
                             style: TextStyle(
@@ -266,10 +255,11 @@ class _ProductPageState extends State<ProductPage> {
                               ),
                             ],
                             onChanged: (value) {
-                              if (value == null) return;
-                              setState(() {
-                                _selectedColor = value;
-                              });
+                              if (value != null) {
+                                setState(() {
+                                  _selectedColor = value;
+                                });
+                              }
                             },
                             decoration: const InputDecoration(
                               border: OutlineInputBorder(),
@@ -277,8 +267,6 @@ class _ProductPageState extends State<ProductPage> {
                             ),
                           ),
                           const SizedBox(height: 16),
-
-                          // Size + Quantity in a row
                           Row(
                             children: [
                               // Size
@@ -319,10 +307,11 @@ class _ProductPageState extends State<ProductPage> {
                                         ),
                                       ],
                                       onChanged: (value) {
-                                        if (value == null) return;
-                                        setState(() {
-                                          _selectedSize = value;
-                                        });
+                                        if (value != null) {
+                                          setState(() {
+                                            _selectedSize = value;
+                                          });
+                                        }
                                       },
                                       decoration: const InputDecoration(
                                         border: OutlineInputBorder(),
@@ -333,7 +322,6 @@ class _ProductPageState extends State<ProductPage> {
                                 ),
                               ),
                               const SizedBox(width: 16),
-
                               // Quantity
                               Expanded(
                                 child: Column(
@@ -367,7 +355,8 @@ class _ProductPageState extends State<ProductPage> {
                                               });
                                             },
                                             icon: const Icon(Icons.remove),
-                                            visualDensity: VisualDensity.compact,
+                                            visualDensity:
+                                                VisualDensity.compact,
                                           ),
                                           Text('$_quantity'),
                                           IconButton(
@@ -377,7 +366,8 @@ class _ProductPageState extends State<ProductPage> {
                                               });
                                             },
                                             icon: const Icon(Icons.add),
-                                            visualDensity: VisualDensity.compact,
+                                            visualDensity:
+                                                VisualDensity.compact,
                                           ),
                                         ],
                                       ),
@@ -396,48 +386,47 @@ class _ProductPageState extends State<ProductPage> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          SizedBox(
-                            width: double.infinity,
-                            child: ElevatedButton(
-                              onPressed: placeholderCallbackForButtons,
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: accent,
-                                foregroundColor: Colors.white,
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 14),
-                                shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.zero,
-                                ),
+                          ElevatedButton(
+                            onPressed: placeholderCallbackForButtons,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: accent,
+                              foregroundColor: Colors.white,
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 14,
                               ),
-                              child: const Text(
-                                'ADD TO BAG',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  letterSpacing: 1,
-                                ),
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.zero,
+                              ),
+                            ),
+                            child: const Text(
+                              'ADD TO BAG',
+                              style: TextStyle(
+                                fontSize: 16,
+                                letterSpacing: 1,
                               ),
                             ),
                           ),
                           const SizedBox(height: 8),
-                          SizedBox(
-                            width: double.infinity,
-                            child: OutlinedButton(
-                              onPressed: placeholderCallbackForButtons,
-                              style: OutlinedButton.styleFrom(
-                                side: BorderSide(color: accent, width: 1.5),
-                                foregroundColor: accent,
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 14),
-                                shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.zero,
-                                ),
+                          OutlinedButton(
+                            onPressed: placeholderCallbackForButtons,
+                            style: OutlinedButton.styleFrom(
+                              side: const BorderSide(
+                                color: accent,
+                                width: 1.5,
                               ),
-                              child: const Text(
-                                'BUY NOW',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  letterSpacing: 1,
-                                ),
+                              foregroundColor: accent,
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 14,
+                              ),
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.zero,
+                              ),
+                            ),
+                            child: const Text(
+                              'BUY NOW',
+                              style: TextStyle(
+                                fontSize: 16,
+                                letterSpacing: 1,
                               ),
                             ),
                           ),
@@ -446,7 +435,6 @@ class _ProductPageState extends State<ProductPage> {
 
                       const SizedBox(height: 32),
 
-                      // Description
                       const Text(
                         'Description',
                         style: TextStyle(
@@ -471,7 +459,6 @@ class _ProductPageState extends State<ProductPage> {
               ),
             ),
 
-            // Footer
             const UnionFooter(),
           ],
         ),
@@ -479,3 +466,4 @@ class _ProductPageState extends State<ProductPage> {
     );
   }
 }
+

@@ -4,6 +4,7 @@ import 'package:union_shop/about_us_page.dart';
 import 'package:union_shop/collections_page.dart';
 import 'package:union_shop/sale_page.dart';
 import 'package:union_shop/union_footer.dart';
+import 'package:union_shop/auth_page.dart';
 
 void main() {
   runApp(const UnionShopApp());
@@ -18,9 +19,8 @@ class UnionShopApp extends StatelessWidget {
       title: 'Union Shop',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF4d2963),
-        ),
+        colorScheme:
+            ColorScheme.fromSeed(seedColor: const Color(0xFF4d2963)),
       ),
       initialRoute: '/',
       routes: {
@@ -29,6 +29,7 @@ class UnionShopApp extends StatelessWidget {
         '/about': (context) => const AboutUsPage(),
         '/collections': (context) => const CollectionsPage(),
         '/sale': (context) => const SalePage(),
+        '/auth': (context) => const AuthPage(),
       },
     );
   }
@@ -39,10 +40,6 @@ class HomeScreen extends StatelessWidget {
 
   void navigateToHome(BuildContext context) {
     Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
-  }
-
-  void navigateToProduct(BuildContext context) {
-    Navigator.pushNamed(context, '/product');
   }
 
   void navigateToAbout(BuildContext context) {
@@ -156,7 +153,9 @@ class HomeScreen extends StatelessWidget {
                                   minWidth: 32,
                                   minHeight: 32,
                                 ),
-                                onPressed: placeholderCallbackForButtons,
+                                onPressed: () {
+                                  Navigator.pushNamed(context, '/auth');
+                                },
                               ),
                               IconButton(
                                 icon: const Icon(
@@ -205,9 +204,7 @@ class HomeScreen extends StatelessWidget {
                       'https://shop.upsu.net/cdn/shop/files/PortsmouthCityPostcard2_1024x1024@2x.jpg?v=1752232561',
                       fit: BoxFit.cover,
                       errorBuilder: (context, error, stackTrace) {
-                        return Container(
-                          color: Colors.grey[300],
-                        );
+                        return Container(color: Colors.grey[300]);
                       },
                     ),
                   ),
@@ -222,8 +219,8 @@ class HomeScreen extends StatelessWidget {
                     top: 80,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        const Text(
+                      children: const [
+                        Text(
                           'Welcome to The Union Shop',
                           style: TextStyle(
                             fontSize: 32,
@@ -232,8 +229,8 @@ class HomeScreen extends StatelessWidget {
                             height: 1.2,
                           ),
                         ),
-                        const SizedBox(height: 16),
-                        const Text(
+                        SizedBox(height: 16),
+                        Text(
                           "Official Students' Union store for merch, gifts and Portsmouth goodies.",
                           style: TextStyle(
                             fontSize: 20,
@@ -242,25 +239,33 @@ class HomeScreen extends StatelessWidget {
                           ),
                           textAlign: TextAlign.center,
                         ),
-                        const SizedBox(height: 32),
-                        ElevatedButton(
-                          onPressed: placeholderCallbackForButtons,
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF4d2963),
-                            foregroundColor: Colors.white,
-                            shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.zero,
-                            ),
-                          ),
-                          child: const Text(
-                            'BROWSE PRODUCTS',
-                            style: TextStyle(
-                              fontSize: 14,
-                              letterSpacing: 1,
-                            ),
+                        SizedBox(height: 32),
+                        // Note: button is just a styled placeholder here
+                      ],
+                    ),
+                  ),
+                  Positioned(
+                    left: 24,
+                    right: 24,
+                    bottom: 60,
+                    child: Center(
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFF4d2963),
+                          foregroundColor: Colors.white,
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.zero,
                           ),
                         ),
-                      ],
+                        child: const Text(
+                          'BROWSE PRODUCTS',
+                          style: TextStyle(
+                            fontSize: 14,
+                            letterSpacing: 1,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ],
@@ -377,40 +382,31 @@ class ProductCard extends StatelessWidget {
                 return Container(
                   color: Colors.grey[300],
                   child: const Center(
-                    child: Icon(
-                      Icons.image_not_supported,
-                      color: Colors.grey,
-                    ),
+                    child: Icon(Icons.image_not_supported, color: Colors.grey),
                   ),
                 );
               },
             ),
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 4),
-              Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 14,
-                  color: Colors.black,
-                ),
-                maxLines: 2,
-              ),
-              const SizedBox(height: 4),
-              Text(
-                price,
-                style: const TextStyle(
-                  fontSize: 13,
-                  color: Colors.grey,
-                ),
-              ),
-            ],
+          const SizedBox(height: 4),
+          Text(
+            title,
+            style: const TextStyle(
+              fontSize: 14,
+              color: Colors.black,
+            ),
+            maxLines: 2,
+          ),
+          const SizedBox(height: 4),
+          Text(
+            price,
+            style: const TextStyle(
+              fontSize: 13,
+              color: Colors.grey,
+            ),
           ),
         ],
       ),
     );
   }
 }
-

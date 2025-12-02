@@ -115,7 +115,9 @@ class CollectionsPage extends StatelessWidget {
                                   minWidth: 32,
                                   minHeight: 32,
                                 ),
-                                onPressed: placeholderCallbackForButtons,
+                                onPressed: () {
+                                  Navigator.pushNamed(context, '/auth');
+                                },
                               ),
                               IconButton(
                                 icon: const Icon(
@@ -212,7 +214,7 @@ class CollectionsPage extends StatelessWidget {
                         description:
                             'End-of-line and discounted Union Shop favourites.',
                         imageUrl:
-                            'https://shop.upsu.net/cdn/shop/files/sale-banner_1024x1024@2x.jpg?v=1614740063',
+                            'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
                         isSale: true,
                         onTap: () => navigateToSale(context),
                       ),
@@ -222,7 +224,6 @@ class CollectionsPage extends StatelessWidget {
               ),
             ),
 
-            // Footer
             const UnionFooter(),
           ],
         ),

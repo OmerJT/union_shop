@@ -9,12 +9,10 @@ class AboutUsPage extends StatelessWidget {
   }
 
   void navigateToAbout(BuildContext context) {
-    // Already on About page – no-op, but kept for consistency
+    // Already here, no-op
   }
 
-  void placeholderCallbackForButtons() {
-    // Placeholder for header icons that don't do anything yet
-  }
+  void placeholderCallbackForButtons() {}
 
   @override
   Widget build(BuildContext context) {
@@ -22,13 +20,12 @@ class AboutUsPage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // Header (same structure as other pages)
+            // Header
             Container(
               height: 100,
               color: Colors.white,
               child: Column(
                 children: [
-                  // Top banner
                   Container(
                     width: double.infinity,
                     padding: const EdgeInsets.symmetric(vertical: 8),
@@ -39,13 +36,11 @@ class AboutUsPage extends StatelessWidget {
                       style: TextStyle(color: Colors.white, fontSize: 16),
                     ),
                   ),
-                  // Main header row
                   Expanded(
                     child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: Row(
                         children: [
-                          // Logo on the left
                           GestureDetector(
                             onTap: () => navigateToHome(context),
                             child: Image.network(
@@ -67,8 +62,6 @@ class AboutUsPage extends StatelessWidget {
                               },
                             ),
                           ),
-
-                          // About Us centred
                           Expanded(
                             child: Center(
                               child: TextButton(
@@ -83,8 +76,6 @@ class AboutUsPage extends StatelessWidget {
                               ),
                             ),
                           ),
-
-                          // Icons on the right
                           Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
@@ -112,7 +103,9 @@ class AboutUsPage extends StatelessWidget {
                                   minWidth: 32,
                                   minHeight: 32,
                                 ),
-                                onPressed: placeholderCallbackForButtons,
+                                onPressed: () {
+                                  Navigator.pushNamed(context, '/auth');
+                                },
                               ),
                               IconButton(
                                 icon: const Icon(
@@ -150,7 +143,7 @@ class AboutUsPage extends StatelessWidget {
               ),
             ),
 
-            // About us main content
+            // About content
             Container(
               color: const Color(0xFFFDF6FB),
               padding:
@@ -238,7 +231,6 @@ class AboutUsPage extends StatelessWidget {
               ),
             ),
 
-            // Shared footer (Opening hours / Help / Latest offers)
             const UnionFooter(),
           ],
         ),

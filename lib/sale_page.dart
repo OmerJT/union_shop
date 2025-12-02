@@ -105,7 +105,9 @@ class SalePage extends StatelessWidget {
                                   minWidth: 32,
                                   minHeight: 32,
                                 ),
-                                onPressed: placeholderCallbackForButtons,
+                                onPressed: () {
+                                  Navigator.pushNamed(context, '/auth');
+                                },
                               ),
                               IconButton(
                                 icon: const Icon(
@@ -161,7 +163,7 @@ class SalePage extends StatelessWidget {
                       ),
                       SizedBox(height: 12),
                       Text(
-                        "Don’t miss out! Get yours before they’re all gone!",
+                        'Don’t miss out! Get yours before they’re all gone!',
                         textAlign: TextAlign.center,
                         style: TextStyle(fontSize: 16, height: 1.5),
                       ),
@@ -181,11 +183,13 @@ class SalePage extends StatelessWidget {
               ),
             ),
 
-            // Filter / sort row (dummy)
+            // Filter / sort bar (dummy)
             Container(
               color: Colors.grey[100],
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 12,
+              ),
               child: Center(
                 child: ConstrainedBox(
                   constraints: const BoxConstraints(maxWidth: 900),
@@ -276,7 +280,6 @@ class SalePage extends StatelessWidget {
               ),
             ),
 
-            // Footer
             const UnionFooter(),
           ],
         ),
@@ -287,6 +290,7 @@ class SalePage extends StatelessWidget {
 
 class _FakeDropdown extends StatelessWidget {
   final String label;
+
   const _FakeDropdown({super.key, required this.label});
 
   @override
@@ -410,4 +414,5 @@ class SaleProductCard extends StatelessWidget {
     );
   }
 }
+
 

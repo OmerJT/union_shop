@@ -8,7 +8,6 @@ void main() {
       await tester.pumpWidget(const UnionShopApp());
       await tester.pumpAndSettle();
 
-      // Header banner + hero + products section + buttons
       expect(
         find.text('FREE CLICK & COLLECT FROM THE UNION SHOP'),
         findsOneWidget,
@@ -23,13 +22,11 @@ void main() {
       await tester.pumpWidget(const UnionShopApp());
       await tester.pumpAndSettle();
 
-      // Product card titles
       expect(find.text('Placeholder Product 1'), findsOneWidget);
       expect(find.text('Placeholder Product 2'), findsOneWidget);
       expect(find.text('Placeholder Product 3'), findsOneWidget);
       expect(find.text('Placeholder Product 4'), findsOneWidget);
 
-      // Prices
       expect(find.text('£10.00'), findsOneWidget);
       expect(find.text('£15.00'), findsOneWidget);
       expect(find.text('£20.00'), findsOneWidget);
@@ -41,10 +38,8 @@ void main() {
       await tester.pumpWidget(const UnionShopApp());
       await tester.pumpAndSettle();
 
-      // About Us nav item
       expect(find.text('About Us'), findsOneWidget);
 
-      // Header icons
       expect(find.byIcon(Icons.search), findsOneWidget);
       expect(find.byIcon(Icons.person_outline), findsOneWidget);
       expect(find.byIcon(Icons.shopping_bag_outlined), findsOneWidget);
@@ -55,7 +50,6 @@ void main() {
       await tester.pumpWidget(const UnionShopApp());
       await tester.pumpAndSettle();
 
-      // Footer column headings
       expect(find.text('Opening Hours'), findsOneWidget);
       expect(find.text('Help and Information'), findsOneWidget);
       expect(find.text('Latest Offers'), findsOneWidget);
