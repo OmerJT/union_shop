@@ -210,8 +210,8 @@ class _SalePageState extends State<SalePage> {
               child: Center(
                 child: ConstrainedBox(
                   constraints: const BoxConstraints(maxWidth: 800),
-                  child: Column(
-                    children: const [
+                  child: const Column(
+                    children: [
                       Text(
                         'SALE',
                         style: TextStyle(
@@ -470,7 +470,7 @@ class SaleProductCard extends StatelessWidget {
                 const SizedBox(width: 6),
                 Text(
                   product.priceLabel,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.bold,
                     color: accent,
@@ -481,7 +481,7 @@ class SaleProductCard extends StatelessWidget {
           else
             Text(
               product.priceLabel,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.bold,
                 color: accent,

@@ -9,9 +9,9 @@ class UnionFooter extends StatelessWidget {
     const bgColor = Color(0xFFF6F5F4);
 
     Widget columns = isWide
-        ? Row(
+        ? const Row(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
+            children: [
               Expanded(child: _OpeningHoursColumn()),
               SizedBox(width: 32),
               Expanded(child: _HelpInfoColumn()),
@@ -19,9 +19,9 @@ class UnionFooter extends StatelessWidget {
               Expanded(child: _LatestOffersColumn()),
             ],
           )
-        : Column(
+        : const Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
+            children: [
               _OpeningHoursColumn(),
               SizedBox(height: 24),
               _HelpInfoColumn(),
@@ -67,9 +67,9 @@ class _OpeningHoursColumn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: const [
+      children: [
         _FooterTitle('Opening Hours'),
         SizedBox(height: 12),
         Text(
@@ -104,9 +104,9 @@ class _HelpInfoColumn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: const [
+      children: [
         _FooterTitle('Help and Information'),
         SizedBox(height: 12),
         Text(
@@ -155,16 +155,16 @@ class _LatestOffersColumn extends StatelessWidget {
         const SizedBox(height: 12),
         Row(
           children: [
-            Expanded(
+            const Expanded(
               child: TextField(
                 decoration: InputDecoration(
                   hintText: 'Email address',
                   isDense: true,
-                  contentPadding: const EdgeInsets.symmetric(
+                  contentPadding: EdgeInsets.symmetric(
                     horizontal: 12,
                     vertical: 10,
                   ),
-                  border: const OutlineInputBorder(),
+                  border: OutlineInputBorder(),
                 ),
               ),
             ),

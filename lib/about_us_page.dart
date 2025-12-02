@@ -112,9 +112,9 @@ class AboutUsPage extends StatelessWidget {
                 child: ConstrainedBox(
                   constraints: const BoxConstraints(maxWidth: 900),
                   child: isWide
-                      ? Row(
+                      ? const Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
+                          children: [
                             Expanded(child: _OpeningHoursColumn()),
                             SizedBox(width: 32),
                             Expanded(child: _HelpInfoColumn()),
@@ -122,9 +122,9 @@ class AboutUsPage extends StatelessWidget {
                             Expanded(child: _LatestOffersColumn()),
                           ],
                         )
-                      : Column(
+                      : const Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
+                          children: [
                             _OpeningHoursColumn(),
                             SizedBox(height: 24),
                             _HelpInfoColumn(),
@@ -161,9 +161,9 @@ class _OpeningHoursColumn extends StatelessWidget {
       height: 1.5,
     );
 
-    return Column(
+    return const Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: const [
+      children: [
         Text('Opening Hours', style: headingStyle),
         SizedBox(height: 12),
         Text('Winter break information', style: emphasisStyle),
