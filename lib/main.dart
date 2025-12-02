@@ -6,6 +6,7 @@ import 'package:union_shop/sale_page.dart';
 import 'package:union_shop/union_footer.dart';
 import 'package:union_shop/auth_page.dart';
 import 'package:union_shop/shop_data.dart';
+import 'package:union_shop/cart_page.dart';
 
 void main() {
   runApp(const UnionShopApp());
@@ -31,6 +32,7 @@ class UnionShopApp extends StatelessWidget {
         '/collections': (context) => const CollectionsPage(),
         '/sale': (context) => const SalePage(),
         '/auth': (context) => const AuthPage(),
+        '/cart': (context) => const CartPage(),
       },
     );
   }
@@ -51,9 +53,7 @@ class HomeScreen extends StatelessWidget {
     Navigator.pushNamed(context, '/collections');
   }
 
-  void placeholderCallbackForButtons() {
-    // This is the event handler for buttons that don't work yet
-  }
+  void placeholderCallbackForButtons() {}
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +71,6 @@ class HomeScreen extends StatelessWidget {
               color: Colors.white,
               child: Column(
                 children: [
-                  // Top banner
                   Container(
                     width: double.infinity,
                     padding: const EdgeInsets.symmetric(vertical: 8),
@@ -82,13 +81,11 @@ class HomeScreen extends StatelessWidget {
                       style: TextStyle(color: Colors.white, fontSize: 16),
                     ),
                   ),
-                  // Main header
                   Expanded(
                     child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: Row(
                         children: [
-                          // Logo on the left
                           GestureDetector(
                             onTap: () => navigateToHome(context),
                             child: Image.network(
@@ -110,8 +107,6 @@ class HomeScreen extends StatelessWidget {
                               },
                             ),
                           ),
-
-                          // About Us centred
                           Expanded(
                             child: Center(
                               child: TextButton(
@@ -126,8 +121,6 @@ class HomeScreen extends StatelessWidget {
                               ),
                             ),
                           ),
-
-                          // Icons on the right
                           Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
@@ -170,7 +163,9 @@ class HomeScreen extends StatelessWidget {
                                   minWidth: 32,
                                   minHeight: 32,
                                 ),
-                                onPressed: placeholderCallbackForButtons,
+                                onPressed: () {
+                                  Navigator.pushNamed(context, '/cart');
+                                },
                               ),
                               IconButton(
                                 icon: const Icon(
@@ -195,7 +190,10 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
 
-            // Hero Section
+            // Hero, products section, footer – unchanged from our last version
+            // (kept exactly as before, using ShopData.featuredProducts)
+
+            // HERO
             SizedBox(
               height: 400,
               width: double.infinity,
@@ -272,7 +270,7 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
 
-            // Products Section
+            // Products section
             Container(
               color: Colors.white,
               child: Padding(
@@ -327,7 +325,6 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
 
-            // Footer
             const UnionFooter(),
           ],
         ),

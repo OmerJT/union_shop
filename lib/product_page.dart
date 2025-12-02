@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:union_shop/union_footer.dart';
 import 'package:union_shop/shop_data.dart';
+import 'package:union_shop/cart_model.dart';
 
 class ProductPage extends StatefulWidget {
   const ProductPage({super.key});
@@ -25,7 +26,25 @@ class _ProductPageState extends State<ProductPage> {
   }
 
   void placeholderCallbackForButtons() {
-    // No real add-to-cart logic needed for intermediate marks.
+    // Event handler for buttons that don't do anything yet
+  }
+
+  void _addToCart() {
+    final cart = CartModel();
+    cart.addItem(
+      _product,
+      color: _selectedColor,
+      size: _selectedSize,
+      quantity: _quantity,
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          'Added $_quantity × ${_product.name} to your bag',
+        ),
+      ),
+    );
   }
 
   @override
@@ -33,12 +52,10 @@ class _ProductPageState extends State<ProductPage> {
     super.didChangeDependencies();
     if (_initialised) return;
 
-    // Try to read a product ID from the route arguments.
     final args = ModalRoute.of(context)?.settings.arguments;
     if (args is String) {
       _product = ShopData.findProductById(args);
     } else {
-      // Fallback for tests or direct construction.
       _product = ShopData.defaultProduct;
     }
     _initialised = true;
@@ -150,7 +167,9 @@ class _ProductPageState extends State<ProductPage> {
                                   minWidth: 32,
                                   minHeight: 32,
                                 ),
-                                onPressed: placeholderCallbackForButtons,
+                                onPressed: () {
+                                  Navigator.pushNamed(context, '/cart');
+                                },
                               ),
                               IconButton(
                                 icon: const Icon(
@@ -175,7 +194,7 @@ class _ProductPageState extends State<ProductPage> {
               ),
             ),
 
-            // Product details
+            // Product details (same layout as before, but driven by _product)
             Container(
               color: Colors.white,
               padding: const EdgeInsets.all(24),
@@ -265,7 +284,7 @@ class _ProductPageState extends State<ProductPage> {
 
                       const SizedBox(height: 24),
 
-                      // Options (colour / size / quantity)
+                      // Options section: colour, size, quantity
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -426,7 +445,7 @@ class _ProductPageState extends State<ProductPage> {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           ElevatedButton(
-                            onPressed: placeholderCallbackForButtons,
+                            onPressed: _addToCart,
                             style: ElevatedButton.styleFrom(
                               backgroundColor: accent,
                               foregroundColor: Colors.white,
