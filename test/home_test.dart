@@ -18,19 +18,16 @@ void main() {
       expect(find.text('VIEW ALL PRODUCTS'), findsOneWidget);
     });
 
-    testWidgets('should display product cards', (tester) async {
+    testWidgets('should display product cards from data model',
+        (tester) async {
       await tester.pumpWidget(const UnionShopApp());
       await tester.pumpAndSettle();
 
-      expect(find.text('Placeholder Product 1'), findsOneWidget);
-      expect(find.text('Placeholder Product 2'), findsOneWidget);
-      expect(find.text('Placeholder Product 3'), findsOneWidget);
-      expect(find.text('Placeholder Product 4'), findsOneWidget);
-
-      expect(find.text('£10.00'), findsOneWidget);
-      expect(find.text('£15.00'), findsOneWidget);
-      expect(find.text('£20.00'), findsOneWidget);
-      expect(find.text('£25.00'), findsOneWidget);
+      // These come from ShopData.featuredProducts
+      expect(find.text('Portsmouth City Fridge Magnet'), findsOneWidget);
+      expect(find.text('A5 Notepad'), findsOneWidget);
+      expect(find.text('Classic Sweatshirts - Neutral'), findsOneWidget);
+      expect(find.text('Recycled Notebook'), findsOneWidget);
     });
 
     testWidgets('should display header icons and About Us link',
