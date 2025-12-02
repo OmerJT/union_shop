@@ -11,6 +11,16 @@ class CollectionsPage extends StatelessWidget {
     Navigator.pushNamed(context, '/about');
   }
 
+  void navigateToSale(BuildContext context) {
+    Navigator.pushNamed(context, '/sale');
+  }
+
+  void showComingSoon(BuildContext context, String title) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('$title collection coming soon')),
+    );
+  }
+
   void placeholderCallbackForButtons() {
     // Placeholder for future actions
   }
@@ -23,7 +33,7 @@ class CollectionsPage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // Header (same layout as home/product)
+            // Header (same layout as other pages)
             Container(
               height: 100,
               color: Colors.white,
@@ -177,13 +187,15 @@ class CollectionsPage extends StatelessWidget {
                     crossAxisCount: isWide ? 2 : 1,
                     crossAxisSpacing: 24,
                     mainAxisSpacing: 24,
-                    children: const [
+                    children: [
                       CollectionCard(
                         title: 'University Clothing',
                         description:
                             'Hoodies, T-shirts and other branded clothing.',
                         imageUrl:
                             'https://shop.upsu.net/cdn/shop/files/upsu-hoodies_1024x1024@2x.jpg?v=1614740063',
+                        onTap: () =>
+                            showComingSoon(context, 'University Clothing'),
                       ),
                       CollectionCard(
                         title: 'Gifts & Stationery',
@@ -191,6 +203,8 @@ class CollectionsPage extends StatelessWidget {
                             'Notebooks, pens, mugs and small gift items.',
                         imageUrl:
                             'https://shop.upsu.net/cdn/shop/files/portsmouth-mugs_1024x1024@2x.jpg?v=1614740063',
+                        onTap: () =>
+                            showComingSoon(context, 'Gifts & Stationery'),
                       ),
                       CollectionCard(
                         title: 'Portsmouth Range',
@@ -198,6 +212,8 @@ class CollectionsPage extends StatelessWidget {
                             'Local designs celebrating the city of Portsmouth.',
                         imageUrl:
                             'https://shop.upsu.net/cdn/shop/files/PortsmouthCityPostcard2_1024x1024@2x.jpg?v=1752232561',
+                        onTap: () =>
+                            showComingSoon(context, 'Portsmouth Range'),
                       ),
                       CollectionCard(
                         title: 'Sale',
@@ -206,6 +222,7 @@ class CollectionsPage extends StatelessWidget {
                         imageUrl:
                             'https://shop.upsu.net/cdn/shop/files/sale-banner_1024x1024@2x.jpg?v=1614740063',
                         isSale: true,
+                        onTap: () => navigateToSale(context),
                       ),
                     ],
                   ),
@@ -213,7 +230,7 @@ class CollectionsPage extends StatelessWidget {
               ),
             ),
 
-            // Footer (same placeholder as other pages for now)
+            // Footer
             Container(
               width: double.infinity,
               color: Colors.grey[50],
@@ -239,6 +256,7 @@ class CollectionCard extends StatelessWidget {
   final String description;
   final String imageUrl;
   final bool isSale;
+  final VoidCallback? onTap;
 
   const CollectionCard({
     super.key,
@@ -246,24 +264,19 @@ class CollectionCard extends StatelessWidget {
     required this.description,
     required this.imageUrl,
     this.isSale = false,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        // For now, just show a message. Later this can navigate to a collection detail page.
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Selected $title (collection coming soon)')),
-        );
-      },
+      onTap: onTap,
       child: Card(
         elevation: 2,
         clipBehavior: Clip.antiAlias,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Image area with optional SALE badge
             Expanded(
               child: Stack(
                 children: [
@@ -306,7 +319,6 @@ class CollectionCard extends StatelessWidget {
                 ],
               ),
             ),
-            // Text content
             Padding(
               padding: const EdgeInsets.all(12),
               child: Column(

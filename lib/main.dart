@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:union_shop/product_page.dart';
 import 'package:union_shop/about_us_page.dart';
 import 'package:union_shop/collections_page.dart';
+import 'package:union_shop/sale_page.dart';
 
 void main() {
   runApp(const UnionShopApp());
@@ -20,13 +21,13 @@ class UnionShopApp extends StatelessWidget {
           seedColor: const Color(0xFF4d2963),
         ),
       ),
-      // Use named routes for navigation
       initialRoute: '/',
       routes: {
         '/': (context) => const HomeScreen(),
         '/product': (context) => const ProductPage(),
         '/about': (context) => const AboutUsPage(),
         '/collections': (context) => const CollectionsPage(),
+        '/sale': (context) => const SalePage(),
       },
     );
   }
@@ -426,5 +427,3 @@ class ProductCard extends StatelessWidget {
     );
   }
 }
-
-
