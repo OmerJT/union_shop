@@ -10,11 +10,11 @@ void main() {
       await tester.pumpWidget(createTestWidget());
       await tester.pumpAndSettle();
 
-      expect(find.text('The UNION'), findsOneWidget);
-      expect(find.text('Sign in'), findsOneWidget);
-      expect(find.text('Sign in with shop'), findsOneWidget);
-      expect(find.text('Email'), findsOneWidget);
-      expect(find.text('Continue'), findsOneWidget);
+      expect(find.text('Already a customer?'), findsOneWidget);
+      expect(find.text('Sign in using your email address and password.'), findsOneWidget);
+      expect(find.text('SIGN IN'), findsOneWidget);
+      expect(find.text('New customer?'), findsOneWidget);
+      expect(find.text('Password'), findsWidgets);
     });
   });
 }
