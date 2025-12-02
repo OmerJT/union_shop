@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:union_shop/union_footer.dart';
 
 class SalePage extends StatelessWidget {
   const SalePage({super.key});
@@ -11,9 +12,7 @@ class SalePage extends StatelessWidget {
     Navigator.pushNamed(context, '/about');
   }
 
-  void placeholderCallbackForButtons() {
-    // Dummy handler for header icons
-  }
+  void placeholderCallbackForButtons() {}
 
   @override
   Widget build(BuildContext context) {
@@ -23,13 +22,12 @@ class SalePage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // Header (same as other pages)
+            // Header
             Container(
               height: 100,
               color: Colors.white,
               child: Column(
                 children: [
-                  // Top banner
                   Container(
                     width: double.infinity,
                     padding: const EdgeInsets.symmetric(vertical: 8),
@@ -40,13 +38,11 @@ class SalePage extends StatelessWidget {
                       style: TextStyle(color: Colors.white, fontSize: 16),
                     ),
                   ),
-                  // Main header
                   Expanded(
                     child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: Row(
                         children: [
-                          // Logo on the left
                           GestureDetector(
                             onTap: () => navigateToHome(context),
                             child: Image.network(
@@ -68,8 +64,6 @@ class SalePage extends StatelessWidget {
                               },
                             ),
                           ),
-
-                          // About Us centred
                           Expanded(
                             child: Center(
                               child: TextButton(
@@ -84,8 +78,6 @@ class SalePage extends StatelessWidget {
                               ),
                             ),
                           ),
-
-                          // Icons on the right
                           Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
@@ -151,7 +143,7 @@ class SalePage extends StatelessWidget {
               ),
             ),
 
-            // SALE heading + intro text
+            // SALE heading
             Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
@@ -285,19 +277,7 @@ class SalePage extends StatelessWidget {
             ),
 
             // Footer
-            Container(
-              width: double.infinity,
-              color: Colors.grey[50],
-              padding: const EdgeInsets.all(24),
-              child: const Text(
-                'Placeholder Footer',
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
+            const UnionFooter(),
           ],
         ),
       ),
@@ -307,7 +287,6 @@ class SalePage extends StatelessWidget {
 
 class _FakeDropdown extends StatelessWidget {
   final String label;
-
   const _FakeDropdown({super.key, required this.label});
 
   @override
@@ -355,12 +334,11 @@ class SaleProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final accent = const Color(0xFF4d2963);
+    const accent = Color(0xFF4d2963);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Image
         Expanded(
           child: AspectRatio(
             aspectRatio: 4 / 3,
@@ -379,7 +357,6 @@ class SaleProductCard extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 8),
-        // Title
         Text(
           title,
           style: const TextStyle(
@@ -390,7 +367,6 @@ class SaleProductCard extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
         ),
         const SizedBox(height: 4),
-        // Price / Sold out
         if (soldOut)
           const Text(
             'Sold out',
@@ -434,3 +410,4 @@ class SaleProductCard extends StatelessWidget {
     );
   }
 }
+

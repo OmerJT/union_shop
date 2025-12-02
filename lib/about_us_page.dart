@@ -1,25 +1,160 @@
 import 'package:flutter/material.dart';
+import 'package:union_shop/union_footer.dart';
 
 class AboutUsPage extends StatelessWidget {
   const AboutUsPage({super.key});
 
+  void navigateToHome(BuildContext context) {
+    Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+  }
+
+  void navigateToAbout(BuildContext context) {
+    // Already on About page – no-op, but kept for consistency
+  }
+
+  void placeholderCallbackForButtons() {
+    // Placeholder for header icons that don't do anything yet
+  }
+
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    final isWide = size.width > 700;
-
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
-        elevation: 0,
-      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // Top "About us" content
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+            // Header (same structure as other pages)
+            Container(
+              height: 100,
+              color: Colors.white,
+              child: Column(
+                children: [
+                  // Top banner
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    color: const Color(0xFF4d2963),
+                    child: const Text(
+                      'FREE CLICK & COLLECT FROM THE UNION SHOP',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Colors.white, fontSize: 16),
+                    ),
+                  ),
+                  // Main header row
+                  Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Row(
+                        children: [
+                          // Logo on the left
+                          GestureDetector(
+                            onTap: () => navigateToHome(context),
+                            child: Image.network(
+                              'https://shop.upsu.net/cdn/shop/files/upsu_300x300.png?v=1614735854',
+                              height: 18,
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) {
+                                return Container(
+                                  color: Colors.grey[300],
+                                  width: 18,
+                                  height: 18,
+                                  child: const Center(
+                                    child: Icon(
+                                      Icons.image_not_supported,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+
+                          // About Us centred
+                          Expanded(
+                            child: Center(
+                              child: TextButton(
+                                onPressed: () => navigateToAbout(context),
+                                child: const Text(
+                                  'About Us',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.black87,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+
+                          // Icons on the right
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              IconButton(
+                                icon: const Icon(
+                                  Icons.search,
+                                  size: 18,
+                                  color: Colors.grey,
+                                ),
+                                padding: const EdgeInsets.all(8),
+                                constraints: const BoxConstraints(
+                                  minWidth: 32,
+                                  minHeight: 32,
+                                ),
+                                onPressed: placeholderCallbackForButtons,
+                              ),
+                              IconButton(
+                                icon: const Icon(
+                                  Icons.person_outline,
+                                  size: 18,
+                                  color: Colors.grey,
+                                ),
+                                padding: const EdgeInsets.all(8),
+                                constraints: const BoxConstraints(
+                                  minWidth: 32,
+                                  minHeight: 32,
+                                ),
+                                onPressed: placeholderCallbackForButtons,
+                              ),
+                              IconButton(
+                                icon: const Icon(
+                                  Icons.shopping_bag_outlined,
+                                  size: 18,
+                                  color: Colors.grey,
+                                ),
+                                padding: const EdgeInsets.all(8),
+                                constraints: const BoxConstraints(
+                                  minWidth: 32,
+                                  minHeight: 32,
+                                ),
+                                onPressed: placeholderCallbackForButtons,
+                              ),
+                              IconButton(
+                                icon: const Icon(
+                                  Icons.menu,
+                                  size: 18,
+                                  color: Colors.grey,
+                                ),
+                                padding: const EdgeInsets.all(8),
+                                constraints: const BoxConstraints(
+                                  minWidth: 32,
+                                  minHeight: 32,
+                                ),
+                                onPressed: placeholderCallbackForButtons,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            // About us main content
+            Container(
+              color: const Color(0xFFFDF6FB),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
               child: Center(
                 child: ConstrainedBox(
                   constraints: const BoxConstraints(maxWidth: 800),
@@ -103,38 +238,8 @@ class AboutUsPage extends StatelessWidget {
               ),
             ),
 
-            // Bottom three-column section (like the real site)
-            Container(
-              width: double.infinity,
-              color: const Color(0xFFF5F5F5),
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
-              child: Center(
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 900),
-                  child: isWide
-                      ? Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
-                            Expanded(child: _OpeningHoursColumn()),
-                            SizedBox(width: 32),
-                            Expanded(child: _HelpInfoColumn()),
-                            SizedBox(width: 32),
-                            Expanded(child: _LatestOffersColumn()),
-                          ],
-                        )
-                      : Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
-                            _OpeningHoursColumn(),
-                            SizedBox(height: 24),
-                            _HelpInfoColumn(),
-                            SizedBox(height: 24),
-                            _LatestOffersColumn(),
-                          ],
-                        ),
-                ),
-              ),
-            ),
+            // Shared footer (Opening hours / Help / Latest offers)
+            const UnionFooter(),
           ],
         ),
       ),
@@ -142,137 +247,3 @@ class AboutUsPage extends StatelessWidget {
   }
 }
 
-class _OpeningHoursColumn extends StatelessWidget {
-  const _OpeningHoursColumn();
-
-  @override
-  Widget build(BuildContext context) {
-    const headingStyle = TextStyle(
-      fontSize: 18,
-      fontWeight: FontWeight.w600,
-    );
-    const bodyStyle = TextStyle(
-      fontSize: 14,
-      height: 1.5,
-    );
-    const emphasisStyle = TextStyle(
-      fontSize: 14,
-      fontWeight: FontWeight.w600,
-      height: 1.5,
-    );
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: const [
-        Text('Opening Hours', style: headingStyle),
-        SizedBox(height: 12),
-        Text('Winter break information', style: emphasisStyle),
-        Text(
-          'Closing: 4pm on 19/12/2025\n'
-          'Re-opening: 10am on 05/01/2026',
-          style: bodyStyle,
-        ),
-        SizedBox(height: 8),
-        Text(
-          'Last post date for online orders: 12pm on 18/12/2025.',
-          style: bodyStyle,
-        ),
-        SizedBox(height: 16),
-        Text('Term time hours', style: emphasisStyle),
-        Text(
-          'Monday – Friday: 10am – 4pm\n'
-          'Hours may differ outside of term time.',
-          style: bodyStyle,
-        ),
-      ],
-    );
-  }
-}
-
-class _HelpInfoColumn extends StatelessWidget {
-  const _HelpInfoColumn();
-
-  @override
-  Widget build(BuildContext context) {
-    const headingStyle = TextStyle(
-      fontSize: 18,
-      fontWeight: FontWeight.w600,
-    );
-    const linkStyle = TextStyle(
-      fontSize: 14,
-      height: 1.6,
-      decoration: TextDecoration.underline,
-      color: Colors.black87,
-    );
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: const [
-        Text('Help and Information', style: headingStyle),
-        SizedBox(height: 12),
-        Text('Search', style: linkStyle),
-        Text('Terms & Conditions of Sale Policy', style: linkStyle),
-      ],
-    );
-  }
-}
-
-class _LatestOffersColumn extends StatelessWidget {
-  const _LatestOffersColumn();
-
-  @override
-  Widget build(BuildContext context) {
-    const headingStyle = TextStyle(
-      fontSize: 18,
-      fontWeight: FontWeight.w600,
-    );
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text('Latest Offers', style: headingStyle),
-        const SizedBox(height: 12),
-        const Text(
-          'Sign up with your email address to receive news and special offers.',
-          style: TextStyle(fontSize: 14, height: 1.6),
-        ),
-        const SizedBox(height: 12),
-        TextField(
-          decoration: InputDecoration(
-            hintText: 'Email address',
-            isDense: true,
-            contentPadding:
-                const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(0),
-            ),
-          ),
-        ),
-        const SizedBox(height: 8),
-        SizedBox(
-          width: double.infinity,
-          child: ElevatedButton(
-            onPressed: () {
-              // Placeholder for subscribe action
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF4d2963),
-              foregroundColor: Colors.white,
-              padding: const EdgeInsets.symmetric(vertical: 12),
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.zero,
-              ),
-            ),
-            child: const Text(
-              'SUBSCRIBE',
-              style: TextStyle(
-                fontSize: 14,
-                letterSpacing: 1,
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}

@@ -8,18 +8,14 @@ void main() {
       await tester.pumpWidget(const UnionShopApp());
       await tester.pumpAndSettle();
 
-      // Header banner text updated by the student
+      // Header banner + hero + products section + buttons
       expect(
         find.text('FREE CLICK & COLLECT FROM THE UNION SHOP'),
         findsOneWidget,
       );
-
-      // Hero section title + main button
       expect(find.text('Welcome to The Union Shop'), findsOneWidget);
-      expect(find.text('BROWSE PRODUCTS'), findsOneWidget);
-
-      // Products section title + secondary button
       expect(find.text('PRODUCTS SECTION'), findsOneWidget);
+      expect(find.text('BROWSE PRODUCTS'), findsOneWidget);
       expect(find.text('VIEW ALL PRODUCTS'), findsOneWidget);
     });
 
@@ -27,13 +23,13 @@ void main() {
       await tester.pumpWidget(const UnionShopApp());
       await tester.pumpAndSettle();
 
-      // Check that product cards are displayed
+      // Product card titles
       expect(find.text('Placeholder Product 1'), findsOneWidget);
       expect(find.text('Placeholder Product 2'), findsOneWidget);
       expect(find.text('Placeholder Product 3'), findsOneWidget);
       expect(find.text('Placeholder Product 4'), findsOneWidget);
 
-      // Check prices are displayed
+      // Prices
       expect(find.text('£10.00'), findsOneWidget);
       expect(find.text('£15.00'), findsOneWidget);
       expect(find.text('£20.00'), findsOneWidget);
@@ -45,7 +41,7 @@ void main() {
       await tester.pumpWidget(const UnionShopApp());
       await tester.pumpAndSettle();
 
-      // New About Us nav item
+      // About Us nav item
       expect(find.text('About Us'), findsOneWidget);
 
       // Header icons
@@ -59,9 +55,12 @@ void main() {
       await tester.pumpWidget(const UnionShopApp());
       await tester.pumpAndSettle();
 
-      // Basic footer text (can be customised later)
-      expect(find.text('Placeholder Footer'), findsOneWidget);
+      // Footer column headings
+      expect(find.text('Opening Hours'), findsOneWidget);
+      expect(find.text('Help and Information'), findsOneWidget);
+      expect(find.text('Latest Offers'), findsOneWidget);
     });
   });
 }
+
 

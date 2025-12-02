@@ -3,6 +3,7 @@ import 'package:union_shop/product_page.dart';
 import 'package:union_shop/about_us_page.dart';
 import 'package:union_shop/collections_page.dart';
 import 'package:union_shop/sale_page.dart';
+import 'package:union_shop/union_footer.dart';
 
 void main() {
   runApp(const UnionShopApp());
@@ -199,7 +200,6 @@ class HomeScreen extends StatelessWidget {
               width: double.infinity,
               child: Stack(
                 children: [
-                  // Background image using Image.network so tests don't crash
                   Positioned.fill(
                     child: Image.network(
                       'https://shop.upsu.net/cdn/shop/files/PortsmouthCityPostcard2_1024x1024@2x.jpg?v=1752232561',
@@ -211,13 +211,11 @@ class HomeScreen extends StatelessWidget {
                       },
                     ),
                   ),
-                  // Dark overlay
                   Positioned.fill(
                     child: Container(
-                      color: Colors.black.withValues(alpha: 0.7),
+                      color: Colors.black.withOpacity(0.7),
                     ),
                   ),
-                  // Content overlay
                   Positioned(
                     left: 24,
                     right: 24,
@@ -342,19 +340,7 @@ class HomeScreen extends StatelessWidget {
             ),
 
             // Footer
-            Container(
-              width: double.infinity,
-              color: Colors.grey[50],
-              padding: const EdgeInsets.all(24),
-              child: const Text(
-                'Placeholder Footer',
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
+            const UnionFooter(),
           ],
         ),
       ),
@@ -427,3 +413,4 @@ class ProductCard extends StatelessWidget {
     );
   }
 }
+

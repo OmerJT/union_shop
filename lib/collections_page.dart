@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:union_shop/union_footer.dart';
 
 class CollectionsPage extends StatelessWidget {
   const CollectionsPage({super.key});
@@ -21,9 +22,7 @@ class CollectionsPage extends StatelessWidget {
     );
   }
 
-  void placeholderCallbackForButtons() {
-    // Placeholder for future actions
-  }
+  void placeholderCallbackForButtons() {}
 
   @override
   Widget build(BuildContext context) {
@@ -33,13 +32,12 @@ class CollectionsPage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // Header (same layout as other pages)
+            // Header
             Container(
               height: 100,
               color: Colors.white,
               child: Column(
                 children: [
-                  // Top banner
                   Container(
                     width: double.infinity,
                     padding: const EdgeInsets.symmetric(vertical: 8),
@@ -50,13 +48,11 @@ class CollectionsPage extends StatelessWidget {
                       style: TextStyle(color: Colors.white, fontSize: 16),
                     ),
                   ),
-                  // Main header
                   Expanded(
                     child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: Row(
                         children: [
-                          // Logo on the left
                           GestureDetector(
                             onTap: () => navigateToHome(context),
                             child: Image.network(
@@ -78,8 +74,6 @@ class CollectionsPage extends StatelessWidget {
                               },
                             ),
                           ),
-
-                          // About Us centred
                           Expanded(
                             child: Center(
                               child: TextButton(
@@ -94,8 +88,6 @@ class CollectionsPage extends StatelessWidget {
                               ),
                             ),
                           ),
-
-                          // Icons on the right
                           Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
@@ -231,19 +223,7 @@ class CollectionsPage extends StatelessWidget {
             ),
 
             // Footer
-            Container(
-              width: double.infinity,
-              color: Colors.grey[50],
-              padding: const EdgeInsets.all(24),
-              child: const Text(
-                'Placeholder Footer',
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
+            const UnionFooter(),
           ],
         ),
       ),
@@ -351,3 +331,4 @@ class CollectionCard extends StatelessWidget {
     );
   }
 }
+
