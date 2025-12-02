@@ -4,7 +4,7 @@ class CartItem {
   final Product product;
   final String color;
   final String size;
-  final int quantity;
+  int quantity; // now mutable so we can update it
 
   CartItem({
     required this.product,
@@ -47,6 +47,24 @@ class CartModel {
     );
   }
 
+  /// Remove a single cart line.
+  void removeItem(CartItem item) {
+    _items.remove(item);
+  }
+
+  /// Update the quantity of an existing line.
+  /// If [newQuantity] <= 0, the item is removed.
+  void updateItemQuantity(CartItem item, int newQuantity) {
+    final index = _items.indexOf(item);
+    if (index == -1) return;
+
+    if (newQuantity <= 0) {
+      _items.removeAt(index);
+    } else {
+      _items[index].quantity = newQuantity;
+    }
+  }
+
   void clear() {
     _items.clear();
   }
@@ -62,3 +80,4 @@ class CartModel {
 
   bool get isEmpty => _items.isEmpty;
 }
+

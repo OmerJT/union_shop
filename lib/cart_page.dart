@@ -231,6 +231,27 @@ class _CartPageState extends State<CartPage> {
                                 return _CartItemRow(
                                   item: item,
                                   isWide: isWide,
+                                  onIncrease: () {
+                                    setState(() {
+                                      cart.updateItemQuantity(
+                                        item,
+                                        item.quantity + 1,
+                                      );
+                                    });
+                                  },
+                                  onDecrease: () {
+                                    setState(() {
+                                      cart.updateItemQuantity(
+                                        item,
+                                        item.quantity - 1,
+                                      );
+                                    });
+                                  },
+                                  onRemove: () {
+                                    setState(() {
+                                      cart.removeItem(item);
+                                    });
+                                  },
                                 );
                               },
                             ),
@@ -305,10 +326,16 @@ class _CartPageState extends State<CartPage> {
 class _CartItemRow extends StatelessWidget {
   final CartItem item;
   final bool isWide;
+  final VoidCallback onIncrease;
+  final VoidCallback onDecrease;
+  final VoidCallback onRemove;
 
   const _CartItemRow({
     required this.item,
     required this.isWide,
+    required this.onIncrease,
+    required this.onDecrease,
+    required this.onRemove,
   });
 
   @override
@@ -326,8 +353,10 @@ class _CartItemRow extends StatelessWidget {
               return Container(
                 color: Colors.grey[300],
                 child: const Center(
-                  child:
-                      Icon(Icons.image_not_supported, color: Colors.grey),
+                  child: Icon(
+                    Icons.image_not_supported,
+                    color: Colors.grey,
+                  ),
                 ),
               );
             },
@@ -353,21 +382,47 @@ class _CartItemRow extends StatelessWidget {
                   color: Colors.grey,
                 ),
               ),
-              const SizedBox(height: 4),
-              Text(
-                'Quantity: ${item.quantity}',
-                style: const TextStyle(
-                  fontSize: 13,
-                  color: Colors.grey,
-                ),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                item.lineTotalLabel,
-                style: const TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                ),
+              const SizedBox(height: 8),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  // Quantity controls
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(4),
+                      border: Border.all(color: Colors.grey.shade400),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        IconButton(
+                          visualDensity: VisualDensity.compact,
+                          icon: const Icon(Icons.remove),
+                          onPressed: onDecrease,
+                        ),
+                        Text('${item.quantity}'),
+                        IconButton(
+                          visualDensity: VisualDensity.compact,
+                          icon: const Icon(Icons.add),
+                          onPressed: onIncrease,
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  TextButton(
+                    onPressed: onRemove,
+                    child: const Text('Remove'),
+                  ),
+                  const Spacer(),
+                  Text(
+                    item.lineTotalLabel,
+                    style: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -376,3 +431,4 @@ class _CartItemRow extends StatelessWidget {
     );
   }
 }
+
