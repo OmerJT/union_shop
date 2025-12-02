@@ -5,21 +5,23 @@ import 'package:union_shop/cart_page.dart';
 import 'package:union_shop/shop_data.dart';
 
 void main() {
-  testWidgets('Cart page shows empty message when there are no items',
-      (tester) async {
-    final cart = CartModel();
-    cart.clear();
+  testWidgets(
+    'Cart page shows empty message when there are no items',
+    (tester) async {
+      final cart = CartModel();
+      cart.clear();
 
-    await tester.pumpWidget(
-      const MaterialApp(
-        home: CartPage(),
-      ),
-    );
-    await tester.pumpAndSettle();
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: CartPage(),
+        ),
+      );
+      await tester.pumpAndSettle();
 
-    expect(find.text('Your Bag'), findsOneWidget);
-    expect(find.text('Your bag is empty.'), findsOneWidget);
-  });
+      expect(find.text('Your Bag'), findsOneWidget);
+      expect(find.text('Your bag is empty.'), findsOneWidget);
+    },
+  );
 
   testWidgets('Cart page shows items from cart model', (tester) async {
     final cart = CartModel();
@@ -41,6 +43,48 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text(product.name), findsOneWidget);
-    expect(find.text('Quantity: 1'), findsOneWidget);
+    expect(find.text('1'), findsOneWidget);
   });
+
+  testWidgets(
+    'Cart page lets user change quantity and remove items',
+    (tester) async {
+      final cart = CartModel();
+      cart.clear();
+
+      final product = ShopData.defaultProduct;
+      cart.addItem(
+        product,
+        color: 'Black',
+        size: 'M',
+        quantity: 1,
+      );
+
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: CartPage(),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      // Initially quantity is 1
+      expect(find.text('1'), findsOneWidget);
+
+      // Tap the + icon to increase quantity
+      await tester.tap(find.byIcon(Icons.add).first);
+      await tester.pumpAndSettle();
+
+      expect(find.text('2'), findsOneWidget);
+
+      // Tap "Remove" to delete the item
+      await tester.tap(find.text('Remove').first);
+      await tester.pumpAndSettle();
+
+      // The product name should no longer be visible
+      expect(find.text(product.name), findsNothing);
+      // And we should see the empty bag message again
+      expect(find.text('Your bag is empty.'), findsOneWidget);
+    },
+  );
 }
+
