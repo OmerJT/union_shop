@@ -7,6 +7,8 @@ import 'package:union_shop/union_footer.dart';
 import 'package:union_shop/auth_page.dart';
 import 'package:union_shop/shop_data.dart';
 import 'package:union_shop/cart_page.dart';
+import 'package:union_shop/print_shack_about_page.dart';
+import 'package:union_shop/print_personalisation_page.dart';
 
 void main() {
   runApp(const UnionShopApp());
@@ -33,6 +35,9 @@ class UnionShopApp extends StatelessWidget {
         '/sale': (context) => const SalePage(),
         '/auth': (context) => const AuthPage(),
         '/cart': (context) => const CartPage(),
+        '/print-shack': (context) => const PrintShackAboutPage(),
+        '/print-personalisation': (context) =>
+            const PrintPersonalisationPage(),
       },
     );
   }
@@ -51,6 +56,14 @@ class HomeScreen extends StatelessWidget {
 
   void navigateToCollections(BuildContext context) {
     Navigator.pushNamed(context, '/collections');
+  }
+
+  void navigateToAuth(BuildContext context) {
+    Navigator.pushNamed(context, '/auth');
+  }
+
+  void navigateToCart(BuildContext context) {
+    Navigator.pushNamed(context, '/cart');
   }
 
   void placeholderCallbackForButtons() {}
@@ -107,20 +120,41 @@ class HomeScreen extends StatelessWidget {
                               },
                             ),
                           ),
+                          // Centre nav (About, Print Shack)
                           Expanded(
                             child: Center(
-                              child: TextButton(
-                                onPressed: () => navigateToAbout(context),
-                                child: const Text(
-                                  'About Us',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.black87,
+                              child: Wrap(
+                                spacing: 16,
+                                alignment: WrapAlignment.center,
+                                children: [
+                                  TextButton(
+                                    onPressed: () => navigateToAbout(context),
+                                    child: const Text(
+                                      'About Us',
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.black87,
+                                      ),
+                                    ),
                                   ),
-                                ),
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pushNamed(
+                                          context, '/print-shack');
+                                    },
+                                    child: const Text(
+                                      'Print Shack',
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.black87,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
+                          // Right icons
                           Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
@@ -148,9 +182,7 @@ class HomeScreen extends StatelessWidget {
                                   minWidth: 32,
                                   minHeight: 32,
                                 ),
-                                onPressed: () {
-                                  Navigator.pushNamed(context, '/auth');
-                                },
+                                onPressed: () => navigateToAuth(context),
                               ),
                               IconButton(
                                 icon: const Icon(
@@ -163,9 +195,7 @@ class HomeScreen extends StatelessWidget {
                                   minWidth: 32,
                                   minHeight: 32,
                                 ),
-                                onPressed: () {
-                                  Navigator.pushNamed(context, '/cart');
-                                },
+                                onPressed: () => navigateToCart(context),
                               ),
                               IconButton(
                                 icon: const Icon(
@@ -190,10 +220,7 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
 
-            // Hero, products section, footer – unchanged from our last version
-            // (kept exactly as before, using ShopData.featuredProducts)
-
-            // HERO
+            // Hero
             SizedBox(
               height: 400,
               width: double.infinity,
@@ -213,13 +240,13 @@ class HomeScreen extends StatelessWidget {
                       color: Colors.black.withOpacity(0.7),
                     ),
                   ),
-                  Positioned(
+                  const Positioned(
                     left: 24,
                     right: 24,
                     top: 80,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      children: const [
+                      children: [
                         Text(
                           'Welcome to The Union Shop',
                           style: TextStyle(
@@ -270,7 +297,7 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
 
-            // Products section
+            // Products Section
             Container(
               color: Colors.white,
               child: Padding(
@@ -362,7 +389,10 @@ class ProductCard extends StatelessWidget {
                 return Container(
                   color: Colors.grey[300],
                   child: const Center(
-                    child: Icon(Icons.image_not_supported, color: Colors.grey),
+                    child: Icon(
+                      Icons.image_not_supported,
+                      color: Colors.grey,
+                    ),
                   ),
                 );
               },
