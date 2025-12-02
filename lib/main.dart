@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:union_shop/product_page.dart';
 import 'package:union_shop/about_us_page.dart';
+import 'package:union_shop/collections_page.dart';
 
 void main() {
   runApp(const UnionShopApp());
@@ -25,6 +26,7 @@ class UnionShopApp extends StatelessWidget {
         '/': (context) => const HomeScreen(),
         '/product': (context) => const ProductPage(),
         '/about': (context) => const AboutUsPage(),
+        '/collections': (context) => const CollectionsPage(),
       },
     );
   }
@@ -43,6 +45,10 @@ class HomeScreen extends StatelessWidget {
 
   void navigateToAbout(BuildContext context) {
     Navigator.pushNamed(context, '/about');
+  }
+
+  void navigateToCollections(BuildContext context) {
+    Navigator.pushNamed(context, '/collections');
   }
 
   void placeholderCallbackForButtons() {
@@ -103,7 +109,8 @@ class HomeScreen extends StatelessWidget {
                               },
                             ),
                           ),
-                          
+
+                          // About Us centred
                           Expanded(
                             child: Center(
                               child: TextButton(
@@ -312,7 +319,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 24),
                     ElevatedButton(
-                      onPressed: placeholderCallbackForButtons,
+                      onPressed: () => navigateToCollections(context),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF4d2963),
                         foregroundColor: Colors.white,
@@ -419,4 +426,5 @@ class ProductCard extends StatelessWidget {
     );
   }
 }
+
 
