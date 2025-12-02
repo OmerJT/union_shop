@@ -9,6 +9,9 @@ import 'package:union_shop/shop_data.dart';
 import 'package:union_shop/cart_page.dart';
 import 'package:union_shop/print_shack_about_page.dart';
 import 'package:union_shop/print_personalisation_page.dart';
+import 'package:union_shop/search_page.dart';
+import 'package:union_shop/auth_model.dart';
+import 'package:union_shop/account_page.dart';
 
 void main() {
   runApp(const UnionShopApp());
@@ -23,8 +26,9 @@ class UnionShopApp extends StatelessWidget {
       title: 'Union Shop',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme:
-            ColorScheme.fromSeed(seedColor: const Color(0xFF4d2963)),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color(0xFF4d2963),
+        ),
       ),
       initialRoute: '/',
       routes: {
@@ -34,10 +38,12 @@ class UnionShopApp extends StatelessWidget {
         '/collections': (context) => const CollectionsPage(),
         '/sale': (context) => const SalePage(),
         '/auth': (context) => const AuthPage(),
+        '/account': (context) => const AccountPage(),
         '/cart': (context) => const CartPage(),
         '/print-shack': (context) => const PrintShackAboutPage(),
         '/print-personalisation': (context) =>
             const PrintPersonalisationPage(),
+        '/search': (context) => const SearchPage(),
       },
     );
   }
@@ -58,12 +64,21 @@ class HomeScreen extends StatelessWidget {
     Navigator.pushNamed(context, '/collections');
   }
 
-  void navigateToAuth(BuildContext context) {
-    Navigator.pushNamed(context, '/auth');
+  void navigateToAuthOrAccount(BuildContext context) {
+    final auth = AuthModel();
+    if (auth.isSignedIn) {
+      Navigator.pushNamed(context, '/account');
+    } else {
+      Navigator.pushNamed(context, '/auth');
+    }
   }
 
   void navigateToCart(BuildContext context) {
     Navigator.pushNamed(context, '/cart');
+  }
+
+  void navigateToSearch(BuildContext context) {
+    Navigator.pushNamed(context, '/search');
   }
 
   void placeholderCallbackForButtons() {}
@@ -140,7 +155,9 @@ class HomeScreen extends StatelessWidget {
                                   TextButton(
                                     onPressed: () {
                                       Navigator.pushNamed(
-                                          context, '/print-shack');
+                                        context,
+                                        '/print-shack',
+                                      );
                                     },
                                     child: const Text(
                                       'Print Shack',
@@ -169,7 +186,7 @@ class HomeScreen extends StatelessWidget {
                                   minWidth: 32,
                                   minHeight: 32,
                                 ),
-                                onPressed: placeholderCallbackForButtons,
+                                onPressed: () => navigateToSearch(context),
                               ),
                               IconButton(
                                 icon: const Icon(
@@ -182,7 +199,9 @@ class HomeScreen extends StatelessWidget {
                                   minWidth: 32,
                                   minHeight: 32,
                                 ),
-                                onPressed: () => navigateToAuth(context),
+                                onPressed: () => navigateToAuthOrAccount(
+                                  context,
+                                ),
                               ),
                               IconButton(
                                 icon: const Icon(
@@ -275,7 +294,7 @@ class HomeScreen extends StatelessWidget {
                     bottom: 60,
                     child: Center(
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () => navigateToCollections(context),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFF4d2963),
                           foregroundColor: Colors.white,
