@@ -25,6 +25,21 @@ void main() {
       expect(find.text('Description'), findsOneWidget);
     });
 
+    testWidgets('should display purchase options and buttons',
+        (tester) async {
+      await tester.pumpWidget(createTestWidget());
+      await tester.pumpAndSettle();
+
+      // Labels for options
+      expect(find.text('Color'), findsOneWidget);
+      expect(find.text('Size'), findsOneWidget);
+      expect(find.text('Quantity'), findsOneWidget);
+
+      // Action buttons
+      expect(find.text('ADD TO BAG'), findsOneWidget);
+      expect(find.text('BUY NOW'), findsOneWidget);
+    });
+
     testWidgets('should display header icons', (tester) async {
       await tester.pumpWidget(createTestWidget());
       await tester.pumpAndSettle();
