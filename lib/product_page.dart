@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:union_shop/union_footer.dart';
+import 'package:union_shop/shop_data.dart';
 
 class ProductPage extends StatefulWidget {
   const ProductPage({super.key});
@@ -9,9 +10,11 @@ class ProductPage extends StatefulWidget {
 }
 
 class _ProductPageState extends State<ProductPage> {
+  late Product _product;
   String _selectedColor = 'Black';
   String _selectedSize = 'S';
   int _quantity = 1;
+  bool _initialised = false;
 
   void navigateToHome(BuildContext context) {
     Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
@@ -22,7 +25,23 @@ class _ProductPageState extends State<ProductPage> {
   }
 
   void placeholderCallbackForButtons() {
-    // No real add-to-cart logic needed
+    // No real add-to-cart logic needed for intermediate marks.
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_initialised) return;
+
+    // Try to read a product ID from the route arguments.
+    final args = ModalRoute.of(context)?.settings.arguments;
+    if (args is String) {
+      _product = ShopData.findProductById(args);
+    } else {
+      // Fallback for tests or direct construction.
+      _product = ShopData.defaultProduct;
+    }
+    _initialised = true;
   }
 
   @override
@@ -33,7 +52,7 @@ class _ProductPageState extends State<ProductPage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // Header (same pattern as Home)
+            // Header
             Container(
               height: 100,
               color: Colors.white,
@@ -156,7 +175,7 @@ class _ProductPageState extends State<ProductPage> {
               ),
             ),
 
-            // Product body
+            // Product details
             Container(
               color: Colors.white,
               padding: const EdgeInsets.all(24),
@@ -166,7 +185,7 @@ class _ProductPageState extends State<ProductPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Image
+                      // Product image
                       Container(
                         height: 300,
                         width: double.infinity,
@@ -177,14 +196,15 @@ class _ProductPageState extends State<ProductPage> {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(8),
                           child: Image.network(
-                            'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
+                            _product.imageUrl,
                             fit: BoxFit.cover,
                             errorBuilder: (context, error, stackTrace) {
                               return Container(
                                 color: Colors.grey[300],
                                 child: const Center(
                                   child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.center,
                                     children: [
                                       Icon(
                                         Icons.image_not_supported,
@@ -207,26 +227,45 @@ class _ProductPageState extends State<ProductPage> {
 
                       const SizedBox(height: 24),
 
-                      const Text(
-                        'Portsmouth City Fridge Magnet',
-                        style: TextStyle(
+                      // Product name
+                      Text(
+                        _product.name,
+                        style: const TextStyle(
                           fontSize: 28,
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
                         ),
                       ),
+
                       const SizedBox(height: 12),
-                      const Text(
-                        '£15.00',
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: accent,
-                        ),
+
+                      // Product price (supports sale price)
+                      Row(
+                        children: [
+                          Text(
+                            _product.priceLabel,
+                            style: const TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              color: accent,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          if (_product.originalPriceLabel != null)
+                            Text(
+                              _product.originalPriceLabel!,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                color: Colors.grey,
+                                decoration: TextDecoration.lineThrough,
+                              ),
+                            ),
+                        ],
                       ),
+
                       const SizedBox(height: 24),
 
-                      // Colour / Size / Quantity
+                      // Options (colour / size / quantity)
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -444,10 +483,9 @@ class _ProductPageState extends State<ProductPage> {
                         ),
                       ),
                       const SizedBox(height: 8),
-                      const Text(
-                        'A colourful Portsmouth city design fridge magnet, perfect as a souvenir or small gift. '
-                        'Designed in collaboration with local artists and exclusive to the Students\' Union shop.',
-                        style: TextStyle(
+                      Text(
+                        _product.description,
+                        style: const TextStyle(
                           fontSize: 16,
                           color: Colors.grey,
                           height: 1.5,
